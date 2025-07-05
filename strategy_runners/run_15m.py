@@ -1,3 +1,6 @@
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import time
 from datetime import datetime
 from core.sl_tp_checker import add_open_trade
@@ -5,6 +8,7 @@ from strategies.smartai_v2 import SmartAIV2
 from utils.binance_data import get_latest_candle
 from core.forward_test_logger import log_forward_test
 from core.telegram_alert import send_telegram_alert
+
 
 smart_ai = SmartAIV2(sl=10, rr=6, min_confidence=50)
 last_candle_time = None
