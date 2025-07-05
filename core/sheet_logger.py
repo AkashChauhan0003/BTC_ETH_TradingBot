@@ -1,3 +1,5 @@
+import json
+import os
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from datetime import datetime
@@ -12,7 +14,9 @@ def log_trade(asset, direction, price, sl="", tp=""):
         "https://spreadsheets.google.com/feeds",
         "https://www.googleapis.com/auth/drive"
     ]
-    creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", scope)
+    # Load credentials from env variable
+    creds_dict = json.loads(os.environ["GOOGLE_CREDS_JSON"])
+    creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)  
     client = gspread.authorize(creds)
 
     # Connect to sheet and tab

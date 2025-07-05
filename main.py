@@ -1,5 +1,6 @@
 import time
 import traceback
+import subprocess
 from core.price_feed import get_eth_price, get_btc_price
 from core.strategy_engine import check_trade_signal
 from core.telegram_alert import send_alert

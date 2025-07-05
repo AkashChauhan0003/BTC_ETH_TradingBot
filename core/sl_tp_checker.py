@@ -1,3 +1,5 @@
+import json
+import os
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from config import sheet_url
@@ -13,7 +15,9 @@ def check_sl_tp():
     print("🔍 Checking SL/TP status...")
 
     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-    creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", scope)
+    # Load credentials from env variable
+    creds_dict = json.loads(os.environ["GOOGLE_CREDS_JSON"])
+    creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)  
     client = gspread.authorize(creds)
     sheet = client.open_by_url(sheet_url)
     tab = sheet.worksheet("Scalping Trades")
@@ -139,7 +143,9 @@ def add_open_trade(signal, timeframe="1m"):
     ]
 
     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-    creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", scope)
+    # Load credentials from env variable
+    creds_dict = json.loads(os.environ["GOOGLE_CREDS_JSON"])
+    creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)    
     client = gspread.authorize(creds)
 
     sheet = client.open_by_url(sheet_url)
